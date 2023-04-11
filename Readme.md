@@ -1,4 +1,4 @@
-# ETHNode_Docker
+# ETHNodeDocker
 
 This project contains the files necessary to run a full POS Ethereum Node within a docker framework, with a modified version of geth. 
 
