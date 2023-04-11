@@ -57,10 +57,10 @@ docker pull sigp/lighthouse:latest
 Check that the image runs: 
 
 ```
-docker run sigp/lighthouse:latest-modern lighthouse --version 
+docker run sigp/lighthouse:latest lighthouse --version 
 ```
 
-### Run The Ethereum Node As a Service 
+### Run The Full Ethereum Node As a Service 
 
 The docker-compose.yaml file contains the instructions to start a docker network and run the geth and lighthouse clients as services, exposing the correct ports, and persisting the data directories.
 
@@ -80,6 +80,28 @@ docker logs -f lighthouse_beacon
 ```
 
 Exit using ctrl-c. Prune the images and containers to clean the docker environment. 
+
+### Read And Write To The Node
+
+Once the node is running, it should be possible to send commands to the RPC endpoint. To determine if your node is synced, run the following on the machine where the node is hosted:
+```
+curl --location --request POST '127.0.0.1:8545' --header 'Content-Type: application/json' --data-raw '{
+	"jsonrpc": "2.0",
+	"id": 1,
+	"method": "eth_syncing",
+	"params": []          	 
+}'
+```
+
+Any result apart from "False" indicates that the node is not fully synced. After the node is synced, it is possible to read the state and post transactions to the node. For example, to find the eth balance of an address, run:
+```
+curl --location --request POST '127.0.0.1:8545' --header 'Content-Type: application/json' --data-raw '{
+	"jsonrpc": "2.0",
+	"id": 1,
+	"method": "eth_getBalance",
+	"params": ["0x3DdfA8eC3052539b6C9549F12cEA2C295cfF5296", "latest"]
+}'
+```
 
 
 ## To Do
