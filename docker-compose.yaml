@@ -10,7 +10,8 @@ services:
       --mainnet 
       --datadir=/root/.ethereum 
       --http --http.addr 0.0.0.0 
-      --http.vhosts "localhost,geth-mainnet" 
+      --http.vhosts "localhost,geth-mainnet,*"
+      --http.corsdomain="*" 
       --authrpc.addr 0.0.0.0 
       --authrpc.vhosts "locahost,geth-mainnet" 
       --authrpc.port 8551 

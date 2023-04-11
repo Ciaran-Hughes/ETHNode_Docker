@@ -103,6 +103,15 @@ curl --location --request POST '127.0.0.1:8545' --header 'Content-Type: applicat
 }'
 ```
 
+## Security Concerns 
+
+In order to connect this local node to external websites like Metamask, in the docker-compose.yaml file, geth is run with the flags 
+```
+--http.vhosts "localhost,geth-mainnet,*"
+--http.corsdomain="*" 
+```
+The wildcards are a potential security concern and should be modified in a production environment. 
+
 
 ## To Do
 
