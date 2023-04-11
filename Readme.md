@@ -4,7 +4,7 @@ This project contains the files necessary to run a full POS Ethereum Node within
 
 ## Description
 
-The purpose of this project is to run a modified version of geth along side the official version of lighthouse. This allows the user to send transactions to the Ethereum blockchain without needing an external endpoint provider (for privacy), or to implement MEV strategies in a modified version of geth. 
+The purpose of this project is to run a modified version of geth along side the official version of lighthouse. This allows the user to send transactions (via a wallet) to the Ethereum blockchain without needing an external endpoint provider (for privacy), or to implement MEV strategies in a modified version of geth. 
 
 The Ethereum execution client is chosen to be geth. This project builds a docker image from the latest ethereum/go-client github repo. This allows the user to edit the github repo in order to point the Dockerfile to a modified version of geth, and run a modified geth instead of the official version. 
 
