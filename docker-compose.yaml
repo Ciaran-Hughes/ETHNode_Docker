@@ -1,0 +1,64 @@
+
+services:
+  execution:
+    image: geth-local
+    container_name: geth-mainnet
+    # --http.addr and --authrpc.addr 0.0.0.0 to listen on all interfaces and not just localhost. 
+    # Localhost wouldn't work with containers as they have differt ip's.
+    # add container name "geth-mainnet" to accepted --http.vhosts and --authrpc.vhosts
+    command: |
+      --mainnet 
+      --datadir=/root/.ethereum 
+      --http --http.addr 0.0.0.0 
+      --http.vhosts "localhost,geth-mainnet" 
+      --authrpc.addr 0.0.0.0 
+      --authrpc.vhosts "locahost,geth-mainnet" 
+      --authrpc.port 8551 
+      -authrpc.jwtsecret=/JWT/jwtsecret
+      --cache 8192
+    ports: # Set the port you want to access the execution client RPC on your host. 
+      - "30303:30303/tcp"
+      - "30303:30303/udp"
+      - "127.0.0.1:8545:8545"
+      - "127.0.0.1:8551:8551"
+    volumes:
+      - type: bind
+        source: /home/bison/projects/geth/datadir
+        target: /root/.ethereum
+      - $HOME/ETHclient/JWT:/JWT
+    networks:
+      - ETH_Node
+    # long grace period to avoid unclean shutdown
+    stop_grace_period: 3m 
+    restart: always
+    tty: true    # Coloured output logs   
+       
+  consensus:
+    image: sigp/lighthouse:latest
+    container_name: lighthouse_beacon
+    command: |
+      lighthouse beacon 
+      --network=mainnet
+      --execution-endpoints=http://geth-mainnet:8551
+      --execution-jwt=/JWT/jwtsecret
+      --http --http-address 0.0.0.0
+      --checkpoint-sync-url https://mainnet.checkpoint.sigp.io 
+      --disable-deposit-contract-sync
+    ports:
+      - "9000:9000/tcp"
+      - "9000:9000/udp"
+      - "127.0.0.1:5052:5052" 
+    volumes:
+      - type: bind
+        source: $HOME/./lighthouse
+        target: /root/.lighthouse
+      - $HOME/ETHclient/JWT:/JWT
+    networks:
+      - ETH_Node
+    stop_grace_period: 3m
+    restart: always
+    tty: true  
+
+
+networks:
+  ETH_Node:
