@@ -16,16 +16,16 @@ services:
       --authrpc.port 8551 
       -authrpc.jwtsecret=/JWT/jwtsecret
       --cache 8192
-    ports: # Set the port you want to access the execution client RPC on your host. 
+    ports: # Set the port you want to access the execution clients on your host. 
       - "30303:30303/tcp"
       - "30303:30303/udp"
       - "127.0.0.1:8545:8545"
       - "127.0.0.1:8551:8551"
     volumes:
       - type: bind
-        source: /home/bison/projects/geth/datadir
+        source: ~/ETHNode/geth_datadir
         target: /root/.ethereum
-      - $HOME/ETHclient/JWT:/JWT
+      - ~/ETHNode/JWT:/JWT
     networks:
       - ETH_Node
     # long grace period to avoid unclean shutdown
@@ -50,15 +50,14 @@ services:
       - "127.0.0.1:5052:5052" 
     volumes:
       - type: bind
-        source: $HOME/./lighthouse
+        source: ~/ETHNode/lighthouse_datadir
         target: /root/.lighthouse
-      - $HOME/ETHclient/JWT:/JWT
+      - ~/ETHNode/JWT:/JWT
     networks:
       - ETH_Node
     stop_grace_period: 3m
     restart: always
     tty: true  
-
 
 networks:
   ETH_Node:

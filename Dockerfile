@@ -20,7 +20,7 @@ ENV GOPATH /go
 ENV PATH $GOROOT/bin:$PATH
 
 # Download and install geth version 
-# Chnage this line to clone forked version of geth
+# Change this line to clone forked version of geth
 RUN git clone https://github.com/ethereum/go-ethereum.git
 RUN cd go-ethereum && \
     make geth && \
