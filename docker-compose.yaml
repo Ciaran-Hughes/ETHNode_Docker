@@ -24,7 +24,7 @@ services:
       - "127.0.0.1:8551:8551"
     volumes:
       - type: bind
-        source: ~/ETHNode/geth_datadir
+        source: ~/ETHNode/geth_datadir/goerli
         target: /root/.ethereum
       - ~/ETHNode/JWT:/JWT
     networks:
@@ -43,7 +43,7 @@ services:
       --execution-endpoints=http://geth-goerli:8551
       --execution-jwt=/JWT/jwtsecret
       --http --http-address 0.0.0.0
-      --checkpoint-sync-url https://prater.checkpoint.sigp.io
+      --checkpoint-sync-url https://checkpoint-sync.goerli.ethpandaops.io/
       --disable-deposit-contract-sync
     ports:
       - "9000:9000/tcp"
