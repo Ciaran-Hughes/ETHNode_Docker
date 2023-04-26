@@ -24,7 +24,7 @@ services:
       - "127.0.0.1:8551:8551"
     volumes:
       - type: bind
-        source: ~/ETHNode/geth_datadir/goerli
+        source: ~/ETHNode/geth_goerli
         target: /root/.ethereum
       - ~/ETHNode/JWT:/JWT
     networks:
@@ -39,11 +39,11 @@ services:
     container_name: lighthouse_beacon
     command: |
       lighthouse beacon 
-      --network=prater
+      --network=goerli
       --execution-endpoints=http://geth-goerli:8551
       --execution-jwt=/JWT/jwtsecret
       --http --http-address 0.0.0.0
-      --checkpoint-sync-url https://checkpoint-sync.goerli.ethpandaops.io/
+      --checkpoint-sync-url https://checkpoint-sync.goerli.ethpandaops.io
       --disable-deposit-contract-sync
     ports:
       - "9000:9000/tcp"
@@ -51,7 +51,7 @@ services:
       - "127.0.0.1:5052:5052" 
     volumes:
       - type: bind
-        source: ~/ETHNode/lighthouse_datadir
+        source: ~/ETHNode/lighthouse_goerli
         target: /root/.lighthouse
       - ~/ETHNode/JWT:/JWT
     networks:
