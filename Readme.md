@@ -75,7 +75,7 @@ docker-compose stop
 
 To check the logs from the geth or lighthouse containers, run docker logs on the container names (which are specified in the docker-compose.yaml file), via 
 ```
-docker logs -f geth-mainnet 
+docker logs -f geth-goerli
 docker logs -f lighthouse_beacon
 ```
 
@@ -112,18 +112,16 @@ In order to connect this local node to external websites like Metamask, in the d
 ```
 The wildcards are a potential security concern and should be modified in a production environment. 
 
+## Connecting To Metamask 
+
+The default chainid when connecting to Metamask via localhost for a testnet is 1337. In order to connect to Goerli, set up a new local testnet with chainid equal to 5, and rpc endpoint http://127.0.0.1:8545.
+
+
 
 ## To Do
 
-* Modify geth to stop propagation of all transactions except those on a whitelist
 * Set up node monitoring 
 
-
-
-## Version History
-
-* 0.1
-    * Initial Release: Runs a Ethereum Node with an official version of geth in conjunction the with the official lighthouse docker image.  
 
 ## License
 

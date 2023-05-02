@@ -1,4 +1,3 @@
-
 services:
   execution:
     image: geth-local
